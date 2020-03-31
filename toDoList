@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css">
+    <script src = './vue.js'></script>
+</head>
+<body>
+        <div id="app">
+                <div class="header">
+                  <div class="container">
+                    <div class="logo">toDoList</div>
+                    <div class="input-area">
+                      <input type="text" @input="handleInput" :value = 'curMask'/>
+                      <button @click = 'addMask'>添加</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="container">
+                  <h2>
+                    <span>正在进行</span>
+                    <span class="mask-num">{{needDoList.length}}</span>
+                  </h2>
+                  <ul class="mask-list">
+                    <li v-for = '(mask,index) in needDoList' :key = 'mask.id'>
+                      <div>
+                        <input type="checkbox" @change = 'doCheck(index,"need")'/>
+                        <span>{{mask.title}}</span>
+                      </div>
+                      <button @click = 'deleteMask(index,"bbb")'>删除</button>
+                    </li>
+                  </ul>
+                </div>
+                <div class="container">
+                  <h2>
+                    <span>已经完成</span>
+                    <span class="mask-num"></span>
+                  </h2>
+                  <ul class="mask-list complete-list">
+                    <li
+                     v-for = '(newMask,index) in hasDone'
+                     :key = 'newMask.id'
+                    >
+                      <div>
+                        <input type="checkbox" @change = 'doCheck(index,"complete")'/>
+                        <span>{{newMask.title}}</span>
+                      </div>
+                      <button @click = 'deleteMask(index,"aaa")'>删除</button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <script>
+              const vm = new Vue({
+                  data:{
+                     curMask:'',
+                     needDoList:[{
+                         title:'aaa',
+                         id:0
+                     },{
+                         title:'bbb',
+                         id:1
+                     },{
+                         title:'cccc',
+                         id:2
+                     },{
+                         title:'ddd',
+                         id:3
+                     },{
+                         title:'eee',
+                         id:4
+                     },{
+                         title:'fff',
+                         id:5
+                     }],
+                     hasDone:[]
+                  },
+                  methods:{
+                      handleInput(e){
+                          this.curMask = e.target.value
+                      },
+                      addMask(){
+                          this.needDoList.push(this.curMask)
+                          console.log(this.needDoList)
+                          this.curMask = ''
+                      },
+                      doCheck(index,type){
+                          if(type === 'need'){
+                            this.hasDone.push(this.needDoList.splice(index,1)[0])
+                         console.log(this.hasDone)
+                          }else(
+                              this.needDoList.push(this.hasDone.splice(index,1)[0])
+                          )
+                      },
+                      deleteMask(index,type){
+                          if(type === 'aaa'){
+                            this.hasDone.splice(index,1)
+                          }else{
+                            this.needDoList.splice(index,1)
+                          }
+                      },
+                     
+                  },
+                  el:'#app'
+              })
+              //遍历时循环index属性，方法里面传递index，用splice删除index下标的元素，一个
+              </script>
+</body>
+</html>
