@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="./index.css"> -->
+    <script src="./vue.js"></script>
+    <style>
+    div{
+        width:500px;
+        background:black;
+        display:inline-block;
+    }
+    </style>
+</head>
+
+<div id="app">
+<div v-for = 'tag in tags' :style ={color:randomColor(),fontSize:randomSize()}>{{tag}}</div>
+</div>
+<body>
+    <script>
+       const vm = new Vue({
+    data:{
+        tags :['开开心心写代码',
+        '月薪过1万三不是梦',
+        '我喜欢成都',
+        '以后在成都买房买车',
+        '娶成都婆娘',
+        '开一家自己的烘焙店',
+        '三十岁之前让自己工资过完',
+        '工资没涨起来之前谈不谈恋爱无所谓',
+        '每天好好写代码',
+        '提升自己的技术能力',
+        '不要想着玩',
+        '静下心树立目标',
+        '为了目标而行动'
+    ]
+    },
+    computed:{
+            randomColor(){
+                return function(){
+                    var red = Math.random()*255;
+                    var green = Math.random()*255;
+                    var blue = Math.random()*255;
+                    return 'rgb('+ red +','+ green +','+ blue +')'
+                }
+            },
+            randomSize(){
+                return function(){
+                    var size = (Math.random()*20 + 20) + 'px';
+                    return size
+                }
+            }
+        },
+    el:'#app'
+})
+//点击时候给点击元素加上class改变样式，原生为获取到元素操作dom，vue逻辑为在有多个行的话这个元素是不是自己的
+//可以给每一行增加index，判断当前点击这个index是不是当前行的
+        </script>
+</body>
+
+</html>
