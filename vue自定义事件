@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src='./vue.js'></script>
+</head>
+<body>
+    <div id="app">
+        <div :style = '{fontSize:postFontSize + "em"}'>
+                <blog-post v-for = '(post,index) in posts' @enlarge-text = 'postFontSize += 0.1' :key = 'index  ':post = 'post'></blog-post>
+        </div>
+    </div>
+    <script>
+        
+        Vue.component('blog-post',{
+            props:{
+                post:Object,
+            },
+            template:`<div>
+                        <h3>{{post.title}}</h3>
+                        <div>{{post.content}}</div>
+                        <button @click = '$emit("enlarge-text")'>放大</button>
+                    </div>`
+        }
+        )
+        // 子组件向父组件传递事件  自定义事件
+        //  组件    大驼峰，小驼峰，短横线命名的组件(不可以全小写)名在模版中一律写成短横线
+        //  prop  注册属性时用小驼峰，模版中使用也要写成短横线，模版中用小驼峰会报错
+        //事件名   事件名不会被当作js变量名或者属性名，所以推荐定义和使用事件时都用短横线方式 (kebab-case)事件名
+
+        const vm = new Vue({
+            data:{
+                postFontSize : 2,
+                 posts:[{
+                     content:'我是内容',
+                     title:'我是标题'
+                 },
+                 {
+                     content:'我是内容1',
+                     title:'我是标题1'
+                 },
+                 {
+                     content:'我是内容2',
+                     title:'我是标题2'
+                 }]
+            },
+           
+                          
+
+            el: '#app'
+        })
+    </script>
+</body>
+
+</html>
