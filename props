@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src='./vue.js'></script>
+</head>
+<body>
+    <div id="app">
+        <news-list :news-list = 'newsList'></news-list>
+
+    </div>
+    <script>
+        const vm = new Vue({
+            data:{
+                newsList:[
+                    {
+                        title:'aaaaa',
+                        index:'hdsfksh',
+                        id:0
+                    },
+                    {
+                        title:'bbb',
+                        index:'hdsfksh',
+                        id:1
+                    },
+                    {
+                        title:'ccc',
+                        index:'hdsfksh',
+                        id:2
+                    },
+                    {
+                        title:'ddd',
+                        index:'hdsfksh',
+                        id:3
+                    }
+                ]
+            },
+            components: {
+                newsList: {
+                    props:['newsList'],
+                    template: `<ul class="news-list">
+                                    <h3 class="search-title">搜索热点</h3>
+                                    <news 
+                                    v-for = '(item,index) in newsList'
+                                    :key = 'item.id'
+                                    :ranking = 'index+1'
+                                    :title = 'item.title'
+                                    :index = 'item.index'
+                                    ></news>
+                                </ul>`,
+                    components: {
+                        News: {
+                            // data(){
+                            //     return{
+                            //         hotClass: ''
+                            //     }
+                            // },
+                        // mounted(){
+                        //     switch(this.ranking){
+                        //         case 1:
+                        //         this.ranking = 'hot1';
+                        //         return;
+                        //         case 2:
+                        //             this.ranking = 'hot';
+                        //             return;
+                        //         case 3:
+                        //             this.ranking = 'hot3';
+                        //             return;
+                        //         default: 
+                        //             return;
+                        //     }
+                        // },
+                            props:['ranking','title','index'],
+                            template: `<li class="news">
+                                <div class="content">
+                                    <div class="ranking" >{{ranking}}</div>
+                                    <div class="title">{{title}}</div>
+                                </div>
+                                <div class="index">{{index}}</div>
+                                    </li>`
+
+                                }
+                    }
+
+                }
+            },
+
+
+            el: '#app'
+        })
+        //组件三步，注册组件，写组件，使用组件，使用组件用短横线方式，注册组件可以用短横线，大驼峰，小驼峰，但是不可以用全小写
+    </script>
+</body>
+
+</html>
