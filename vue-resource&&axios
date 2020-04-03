@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="./vue.js"></script>
+    <!-- <script src="./vue-resource.js"></script> -->
+    <script src="./axios.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="username">
+        <input type="text" v-model="name" />
+      </div>
+      <div class="mail">
+        <input type="text" v-model="mail" />
+      </div>
+      <div class="upload-btn" @click="handleUpload">上传</div>
+      <div class="show-btn" @click="handleShow">显示人物信息</div>
+      <button @click = 'handleCancelGet'>取消get请求</button>
+      <ul>
+        <li v-for="person in personList">
+          <span>{{person.name}}</span>
+          <span>{{person.mail}}</span>
+        </li>
+      </ul>
+    </div>
+    <script>
+    //   const instance = axios.create({
+    //     baseURL: "https://developer.duyiedu.com/vue"
+    //   });
+    //   axios.interceptors.request.use(config =>{
+    //      console.log(config)
+    //   if(config.method === 'get'){
+
+    //   }
+    //   if(config.method === 'post'){}
+    //   })
+    //   const interceptor = axios.interceptors.response.use(response => {
+    //     console.log(response);
+    //     if(response.status === 200){
+    //         return response.data;
+    //     }else{
+    //         alert(error)
+    //     }
+    //   });
+    //   axios.interceptor.response.eject(interceptor)
+    //   const instance = axios.create();
+    //   instance.interceptors.response.use()
+//取消请求
+    const  cancelToken = axios.CancelToken;
+    const source = cancelToken.source();
+
+
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          name: "",
+          mail: "",
+          msg: "",
+          personList: []
+        },
+        methods: {
+          handleUpload() {
+            // this.$http
+            //   .post("https://developer.duyiedu.com/vue/setUserInfo", {
+            //     name: this.name,
+            //     mail: this.mail
+            //   })
+            //   .then(res => {
+            //     this.msg = res.body.msg;
+            //     console.log(res.body.msg);
+            //   })
+            //   .catch(error => {
+            //     this.msg = error.body.msg;
+            //   });
+            //     const { name, mail } = this;
+            //     instance
+            //       .post("/setUserInfo", {
+            //         name,
+            //         mail
+            //       })
+            //       .then(res => {
+            //         console.log(res);
+            //       })
+            //       .catch(error => {
+            //         console.log(error);
+            //       });
+          },
+          handleShow() {
+              //vue-resource
+            // this.$http
+            //   .get("https://developer.duyiedu.com/vue/getUserInfo")
+            //   .then(res => {
+            //     this.personList = res.body.data;
+            //     console.log(this.msgList);
+            //   });
+            //axios方法别名
+            // axios({
+            //   method: "get",
+            //   url: "https://developer.duyiedu.com/vue/getUserInfo"
+            // }).then(res => {
+            //   console.log(res);
+            //   this.personList = res.data.data;
+            // });
+            axios
+              .get("https://developer.duyiedu.com/vue/getUserInfo",{cancelToken:source.token})
+              .then(res => {
+                console.log(res);
+                this.personList = res.data.data;
+              });
+            //并发请求
+            // axios
+            //   .all([
+            //     // axios.post("https://developer.duyiedu.com/vue/setUserInfo", {
+            //     //   name: "xx",
+            //     //   mail: "xxaaa"
+            //     // }),
+            //     axios.get("https://developer.duyiedu.com/vue/getUserInfo")
+            //   ])
+            //   .then(
+            //     axios.spread((aaa, bbb) => {
+            //       console.log(aaa);
+            //       console.log(bbb);
+            //     })
+            //   );
+          },
+          handleCancelGet(){
+              source.cancel()
+          }
+        },
+        // watch: {
+        //   msg111() {
+        //     if (this.msg === "") {
+        //       return;
+        //     }
+        //     alert(this.msg);
+        //     this.msg = "";
+        //   }
+        // }
+      });
+      //后端规定，get请求第一个参数URL，第二个参数可写可不写，post请求第一个参数URL，第二个参数是请求的数据
+    //   axios预检
+    </script>
+  </body>
+</html>
