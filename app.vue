@@ -6,9 +6,6 @@
 <script>
 import DatePicker from './DatePicker'
 export default {
-  components: {
-    DatePicker
-  },
   data() {
     return {
       date: new Date()
