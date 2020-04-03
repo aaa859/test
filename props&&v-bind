@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="./vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- <my-component></my-component> -->
+      <div :style= "{ color:'red',width:'100px',backgroundColor:'yellow'}">好好学习，天天向上</div>
+    </div>
+    <!-- div内部绑定style要写成动态绑定 
+    style从data内部取也要写成动态绑定
+    -->
+    <script>
+      //prop传值不仅可以父子传值，还可以自己给自己传值，
+      //注册props:['poster']，在template里面比如图片路径:src = poster   在my-component  poster = '图片路径'
+      //如果post需要从外部动态取数据，数据不写死，外部传递给你什么就接收什么就用:动态获取
+      // 所以 :用不用取决于是不是外部动态传递数据给你
+      // Vue.component("myComponent", {
+      //   template: `
+      //       <div>hello world,begin starting</div>`
+      // });
+      const vm = new Vue({
+        el: "#app",
+        data: {
+          type: "111",
+          isRed: !false,
+          red:'redClass',
+          green: 'greenClass',
+          attr:'a',        }
+      });
+    </script>
+    
+  </body>
+</html>
